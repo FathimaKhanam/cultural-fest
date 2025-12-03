@@ -3,6 +3,7 @@ package com.culturalfest.controller;
 import com.culturalfest.model.User;
 import com.culturalfest.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -13,42 +14,43 @@ import java.util.HashMap;
 @RequestMapping("/api/users")
 @CrossOrigin(origins = "*")
 public class UserController {
-    
     @Autowired
     private UserService userService;
     
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@RequestBody User user) {
+    public ResponseEntity<?> register(@RequestBody User user) {
         try {
-            User registered = userService.registerUser(user);
-            return ResponseEntity.ok(Map.of(
-                "success", true,
-                "message", "User registered successfully!",
-                "user", registered
-            ));
+            User registeredUser = userService.registerUser(user);
+            return ResponseEntity.ok(registeredUser);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(Map.of(
-                "success", false,
-                "message", e.getMessage()
-            ));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Map.of("error", e.getMessage()));
         }
     }
     
     @PostMapping("/login")
-    public ResponseEntity<?> loginUser(@RequestBody Map<String, String> credentials) {
-        String email = credentials.get("email");
-        String password = credentials.get("password");
-        
-        return userService.loginUser(email, password)
-            .map(user -> ResponseEntity.ok(Map.of(
-                "success", true,
-                "message", "Login successful!",
-                "user", user
-            )))
-            .orElse(ResponseEntity.badRequest().body(Map.of(
-                "success", false,
-                "message", "Invalid email or password"
-            )));
+    public ResponseEntity<?> login(@RequestBody Map<String, String> credentials) {
+        try {
+            String email = credentials.get("email");
+            String password = credentials.get("password");
+            String role = credentials.get("role");
+            
+            return userService.login(email, password)
+                .filter(user -> user.getRole().name().equals(role))
+                .map(user -> {
+                    Map<String, Object> response = new HashMap<>();
+                    response.put("name", user.getName());
+                    response.put("email", user.getEmail());
+                    response.put("role", user.getRole());
+                    response.put("id", user.getId());
+                    return ResponseEntity.ok(response);
+                })
+                .orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("error", "Invalid credentials or role")));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Map.of("error", e.getMessage()));
+        }
     }
     
     @GetMapping
@@ -65,23 +67,18 @@ public class UserController {
     
     @GetMapping("/role/{role}")
     public ResponseEntity<List<User>> getUsersByRole(@PathVariable String role) {
-        return ResponseEntity.ok(userService.getUsersByRole(role));
+        User.Role userRole = User.Role.valueOf(role.toUpperCase());
+        return ResponseEntity.ok(userService.getUsersByRole(userRole));
     }
     
     @PutMapping("/{id}")
     public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody User user) {
         try {
             User updated = userService.updateUser(id, user);
-            return ResponseEntity.ok(Map.of(
-                "success", true,
-                "message", "User updated successfully!",
-                "user", updated
-            ));
+            return ResponseEntity.ok(updated);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(Map.of(
-                "success", false,
-                "message", e.getMessage()
-            ));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(Map.of("error", e.getMessage()));
         }
     }
     
@@ -89,24 +86,10 @@ public class UserController {
     public ResponseEntity<?> deleteUser(@PathVariable Long id) {
         try {
             userService.deleteUser(id);
-            return ResponseEntity.ok(Map.of(
-                "success", true,
-                "message", "User deleted successfully!"
-            ));
+            return ResponseEntity.ok(Map.of("message", "User deleted successfully"));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(Map.of(
-                "success", false,
-                "message", e.getMessage()
-            ));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(Map.of("error", e.getMessage()));
         }
-    }
-    
-    @GetMapping("/stats")
-    public ResponseEntity<?> getUserStats() {
-        return ResponseEntity.ok(Map.of(
-            "totalUsers", userService.getTotalUsers(),
-            "students", userService.getUsersByRole("STUDENT").size(),
-            "admins", userService.getUsersByRole("ADMIN").size()
-        ));
     }
 }

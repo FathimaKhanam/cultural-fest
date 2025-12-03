@@ -1,12 +1,9 @@
 package com.culturalfest.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.LocalDateTime;
-import java.math.BigDecimal;
 
 @Entity
 @Table(name = "events")
@@ -16,84 +13,109 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @NotBlank
     @Column(nullable = false)
-    private String eventName;
-    
-    @Column(unique = true)
-    private String eventCode;
+    private String name;
     
     @Column(columnDefinition = "TEXT")
-    private String eventDescription;
+    private String description;
     
     @Column(nullable = false)
-    private String eventCategory; // DANCE, MUSIC, DRAMA, LITERARY, etc.
+    private String category;
     
-    @Column(nullable = false)
-    private String eventType; // SOLO, DUET, GROUP, TEAM
+    private String type;  // ← ADDED (e.g., "Solo", "Group", "Team")
     
-    private Integer maxParticipants = 1;
-    private Integer minParticipants = 1;
-    private Integer maxRegistrations;
-    private Integer currentRegistrations = 0;
-    
-    private BigDecimal registrationFee = BigDecimal.ZERO;
-    private Boolean isPaidEvent = false;
-    
-    @NotNull
-    @Column(nullable = false)
     private LocalDate eventDate;
     
-    @NotNull
-    @Column(nullable = false)
     private LocalTime eventStartTime;
     
-    private LocalTime eventEndTime;
-    private Integer durationMinutes;
-    
-    @NotNull
-    @Column(nullable = false)
     private String venue;
     
-    private Integer venueCapacity;
+    private Integer maxParticipants;  // ← ADDED
     
-    @NotNull
-    @Column(nullable = false)
-    private LocalDate registrationStartDate;
+    private Integer maxRegistrations;
     
-    @NotNull
-    @Column(nullable = false)
-    private LocalDate registrationEndDate;
+    private Integer currentRegistrations = 0;
     
-    private String status = "DRAFT"; // DRAFT, OPEN, CLOSED, LIVE, COMPLETED
+    private Double registrationFee;  // ← ADDED
     
-    @Column(columnDefinition = "TEXT")
-    private String rules;
+    @Enumerated(EnumType.STRING)
+    private EventStatus status = EventStatus.UPCOMING;
     
-    private String coordinatorName;
-    private String coordinatorMobile;
-    private String coordinatorEmail;
+    private String image;
     
-    private BigDecimal firstPrize;
-    private BigDecimal secondPrize;
-    private BigDecimal thirdPrize;
+    private Boolean isNew = false;
     
-    private Long viewCount = 0L;
-    
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "created_by")
-    private User createdBy;
-    
+    @Column(updatable = false)
     private LocalDateTime createdAt;
+    
     private LocalDateTime updatedAt;
+    
+    // Constructors
+    public Event() {}
+    
+    public Event(String name, String category, LocalDate eventDate, String venue) {
+        this.name = name;
+        this.category = category;
+        this.eventDate = eventDate;
+        this.venue = venue;
+    }
+    
+    // Getters and Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+    
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
+    
+    public String getCategory() { return category; }
+    public void setCategory(String category) { this.category = category; }
+    
+    public String getType() { return type; }  // ← ADDED
+    public void setType(String type) { this.type = type; }  // ← ADDED
+    
+    public LocalDate getEventDate() { return eventDate; }
+    public void setEventDate(LocalDate eventDate) { this.eventDate = eventDate; }
+    
+    public LocalTime getEventStartTime() { return eventStartTime; }
+    public void setEventStartTime(LocalTime eventStartTime) { this.eventStartTime = eventStartTime; }
+    
+    public String getVenue() { return venue; }
+    public void setVenue(String venue) { this.venue = venue; }
+    
+    public Integer getMaxParticipants() { return maxParticipants; }  // ← ADDED
+    public void setMaxParticipants(Integer maxParticipants) { this.maxParticipants = maxParticipants; }  // ← ADDED
+    
+    public Integer getMaxRegistrations() { return maxRegistrations; }
+    public void setMaxRegistrations(Integer maxRegistrations) { this.maxRegistrations = maxRegistrations; }
+    
+    public Integer getCurrentRegistrations() { return currentRegistrations; }
+    public void setCurrentRegistrations(Integer currentRegistrations) { this.currentRegistrations = currentRegistrations; }
+    
+    public Double getRegistrationFee() { return registrationFee; }  // ← ADDED
+    public void setRegistrationFee(Double registrationFee) { this.registrationFee = registrationFee; }  // ← ADDED
+    
+    public EventStatus getStatus() { return status; }
+    public void setStatus(EventStatus status) { this.status = status; }
+    
+    public String getImage() { return image; }
+    public void setImage(String image) { this.image = image; }
+    
+    public Boolean getIsNew() { return isNew; }
+    public void setIsNew(Boolean isNew) { this.isNew = isNew; }
+    
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+    
+    public LocalDateTime getUpdatedAt() { return updatedAt; }
+    public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
     
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();
         updatedAt = LocalDateTime.now();
-        if (eventCode == null) {
-            eventCode = "CF2025-" + System.currentTimeMillis() % 100000;
-        }
     }
     
     @PreUpdate
@@ -101,158 +123,7 @@ public class Event {
         updatedAt = LocalDateTime.now();
     }
     
-    // Constructors
-    public Event() {}
-    
-    // Business Methods
-    public boolean isRegistrationOpen() {
-        LocalDate today = LocalDate.now();
-        return "OPEN".equals(status) &&
-               !today.isBefore(registrationStartDate) &&
-               !today.isAfter(registrationEndDate) &&
-               (maxRegistrations == null || currentRegistrations < maxRegistrations);
+    public enum EventStatus {
+        UPCOMING, ONGOING, COMPLETED, CANCELLED
     }
-    
-    public int getRemainingSlots() {
-        if (maxRegistrations == null) return Integer.MAX_VALUE;
-        return Math.max(0, maxRegistrations - currentRegistrations);
-    }
-    
-    public void incrementRegistrationCount() {
-        this.currentRegistrations = (this.currentRegistrations == null ? 0 : this.currentRegistrations) + 1;
-    }
-    
-    // Getters and Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-    
-    public String getEventName() { return eventName; }
-    public void setEventName(String eventName) { this.eventName = eventName; }
-    
-    public String getEventCode() { return eventCode; }
-    public void setEventCode(String eventCode) { this.eventCode = eventCode; }
-    
-    public String getEventDescription() { return eventDescription; }
-    public void setEventDescription(String eventDescription) { 
-        this.eventDescription = eventDescription; 
-    }
-    
-    public String getEventCategory() { return eventCategory; }
-    public void setEventCategory(String eventCategory) { 
-        this.eventCategory = eventCategory; 
-    }
-    
-    public String getEventType() { return eventType; }
-    public void setEventType(String eventType) { this.eventType = eventType; }
-    
-    public Integer getMaxParticipants() { return maxParticipants; }
-    public void setMaxParticipants(Integer maxParticipants) { 
-        this.maxParticipants = maxParticipants; 
-    }
-    
-    public Integer getMinParticipants() { return minParticipants; }
-    public void setMinParticipants(Integer minParticipants) { 
-        this.minParticipants = minParticipants; 
-    }
-    
-    public Integer getCurrentRegistrations() { return currentRegistrations; }
-    public void setCurrentRegistrations(Integer currentRegistrations) { 
-        this.currentRegistrations = currentRegistrations; 
-    }
-    
-    public Integer getMaxRegistrations() { return maxRegistrations; }
-    public void setMaxRegistrations(Integer maxRegistrations) { 
-        this.maxRegistrations = maxRegistrations; 
-    }
-    
-    public BigDecimal getRegistrationFee() { return registrationFee; }
-    public void setRegistrationFee(BigDecimal registrationFee) { 
-        this.registrationFee = registrationFee; 
-    }
-    
-    public Boolean getIsPaidEvent() { return isPaidEvent; }
-    public void setIsPaidEvent(Boolean isPaidEvent) { 
-        this.isPaidEvent = isPaidEvent; 
-    }
-    
-    public LocalDate getEventDate() { return eventDate; }
-    public void setEventDate(LocalDate eventDate) { this.eventDate = eventDate; }
-    
-    public LocalTime getEventStartTime() { return eventStartTime; }
-    public void setEventStartTime(LocalTime eventStartTime) { 
-        this.eventStartTime = eventStartTime; 
-    }
-    
-    public LocalTime getEventEndTime() { return eventEndTime; }
-    public void setEventEndTime(LocalTime eventEndTime) { 
-        this.eventEndTime = eventEndTime; 
-    }
-    
-    public Integer getDurationMinutes() { return durationMinutes; }
-    public void setDurationMinutes(Integer durationMinutes) { 
-        this.durationMinutes = durationMinutes; 
-    }
-    
-    public String getVenue() { return venue; }
-    public void setVenue(String venue) { this.venue = venue; }
-    
-    public Integer getVenueCapacity() { return venueCapacity; }
-    public void setVenueCapacity(Integer venueCapacity) { 
-        this.venueCapacity = venueCapacity; 
-    }
-    
-    public LocalDate getRegistrationStartDate() { return registrationStartDate; }
-    public void setRegistrationStartDate(LocalDate registrationStartDate) { 
-        this.registrationStartDate = registrationStartDate; 
-    }
-    
-    public LocalDate getRegistrationEndDate() { return registrationEndDate; }
-    public void setRegistrationEndDate(LocalDate registrationEndDate) { 
-        this.registrationEndDate = registrationEndDate; 
-    }
-    
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
-    
-    public String getRules() { return rules; }
-    public void setRules(String rules) { this.rules = rules; }
-    
-    public String getCoordinatorName() { return coordinatorName; }
-    public void setCoordinatorName(String coordinatorName) { 
-        this.coordinatorName = coordinatorName; 
-    }
-    
-    public String getCoordinatorMobile() { return coordinatorMobile; }
-    public void setCoordinatorMobile(String coordinatorMobile) { 
-        this.coordinatorMobile = coordinatorMobile; 
-    }
-    
-    public String getCoordinatorEmail() { return coordinatorEmail; }
-    public void setCoordinatorEmail(String coordinatorEmail) { 
-        this.coordinatorEmail = coordinatorEmail; 
-    }
-    
-    public BigDecimal getFirstPrize() { return firstPrize; }
-    public void setFirstPrize(BigDecimal firstPrize) { 
-        this.firstPrize = firstPrize; 
-    }
-    
-    public BigDecimal getSecondPrize() { return secondPrize; }
-    public void setSecondPrize(BigDecimal secondPrize) { 
-        this.secondPrize = secondPrize; 
-    }
-    
-    public BigDecimal getThirdPrize() { return thirdPrize; }
-    public void setThirdPrize(BigDecimal thirdPrize) { 
-        this.thirdPrize = thirdPrize; 
-    }
-    
-    public Long getViewCount() { return viewCount; }
-    public void setViewCount(Long viewCount) { this.viewCount = viewCount; }
-    
-    public User getCreatedBy() { return createdBy; }
-    public void setCreatedBy(User createdBy) { this.createdBy = createdBy; }
-    
-    public LocalDateTime getCreatedAt() { return createdAt; }
-    public LocalDateTime getUpdatedAt() { return updatedAt; }
 }

@@ -11,4 +11,4 @@ public class CulturalFestApplication {
         System.out.println("🌐 Open browser: http://localhost:8080");
         System.out.println("📊 API Docs: http://localhost:8080/api/test\n");
     }
-} 
+}
