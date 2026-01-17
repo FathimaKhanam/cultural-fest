@@ -1,0 +1,880 @@
+/* ====================================================
+   GLOBAL
+==================================================== */
+:root {
+  --kl-blue: red;
+  --kl-blue-light: rgba(146, 20, 16, 0.85);
+  --kl-yellow: #ffcb05;
+  --kl-grey: #f5f5f7;
+  --kl-dark: #222;
+  --soft-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background: #ffffff;
+  overflow-x: hidden;
+  color: #222;
+}
+
+/* ====================================================
+   NAVBAR
+==================================================== */
+header {
+  width: 100%;
+  background: var(--kl-blue-light);
+  position: fixed;
+  top: 0; left: 0;
+  z-index: 2000;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.25);
+  backdrop-filter: blur(8px);
+}
+
+.container {
+  max-width: 1250px;
+  margin: auto;
+  padding: 0 20px;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 82px;
+}
+
+/* Logo */
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.logo {
+  width: 60px;
+  height: 60px;
+}
+
+.title-wrap { color:white; line-height:1.2; }
+.uni-title { font-size:20px; font-weight:700; }
+.fest-subtitle { font-size:14px; opacity:.9; }
+
+/* Nav links */
+nav ul {
+  list-style:none;
+  display:flex;
+  gap:28px;
+}
+
+nav ul li a {
+  text-decoration:none;
+  color:white;
+  font-weight:500;
+  transition:0.3s;
+}
+
+nav ul li a:hover {
+  color: var(--kl-yellow);
+}
+
+/* Auth Buttons */
+.user-actions .btn {
+  margin-left: 10px;
+  padding: 6px 16px;
+  background: var(--kl-yellow);
+  color: #222;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.user-actions .btn:hover {
+  background: #ffb800;
+}
+
+/* Profile Menu */
+.profile-menu {
+  display:none;
+  align-items:center;
+  position:relative;
+}
+
+.profile-icon {
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  cursor:pointer;
+  background:white;
+  padding:3px;
+}
+
+.profile-dropdown {
+  display:none;
+  position:absolute;
+  right:0; top:52px;
+  background:white;
+  padding:15px;
+  border-radius:8px;
+  width:200px;
+  box-shadow:var(--soft-shadow);
+}
+
+.profile-dropdown p { margin-bottom:8px; }
+
+.profile-dropdown button {
+  width:100%;
+  padding:6px 12px;
+  border-radius:6px;
+  background:var(--kl-blue);
+  color:white;
+  border:none;
+}
+
+/* ====================================================
+   HERO
+==================================================== */
+.hero {
+  height: 60vh;
+  background-size: cover;
+  background-position: center;
+  margin-top: 82px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.hero-overlay {
+  position:absolute;
+  width:100%; height:100%;
+  background: rgba(0, 30, 70, 0.55);
+  backdrop-filter: blur(3px);
+}
+
+.hero-inner {
+  position:relative;
+  color:white;
+  max-width:650px;
+}
+
+.hero h1 { font-size:44px; margin-bottom:12px; }
+
+.hero p { opacity:0.9; margin-bottom:20px; }
+
+.btn-primary {
+  background:var(--kl-yellow);
+  padding:10px 22px;
+  border:none;
+  border-radius:6px;
+  font-weight:600;
+  cursor:pointer;
+}
+
+/* ====================================================
+   SLIDER
+==================================================== */
+.coming-soon-section {
+  width:100%;
+  height:100vh;
+}
+
+.coming-soon-slider {
+  width:100%;
+  height:100%;
+  position:relative;
+  overflow:hidden;
+}
+
+.slide {
+  position:absolute;
+  width:100%;
+  height:100%;
+  transform:scale(1.07);
+  opacity:0;
+  transition:1s ease;
+  background-size:cover;
+  background-position:center;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.slide.active {
+  opacity:1;
+  transform:scale(1);
+}
+
+.slide-content {
+  width:460px;
+  padding:25px;
+  border-radius:10px;
+  background:rgba(0,0,0,0.55);
+  color:white;
+  text-align:center;
+}
+
+.event-logo {
+  width:110px;
+  border-radius:10px;
+  margin-bottom:12px;
+}
+
+.slide-indicators {
+  position:absolute;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  gap:12px;
+}
+
+.indicator {
+  width:14px; height:14px;
+  background:white;
+  border-radius:50%;
+  opacity:.5;
+  cursor:pointer;
+}
+
+.indicator.active { opacity:1; }
+
+/* ====================================================
+   EVENTS GRID
+==================================================== */
+.section-title {
+  text-align:center;
+  font-size:32px;
+  margin-bottom:22px;
+  color: var(--kl-blue);
+}
+
+.events-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(285px, 1fr));
+  gap:22px;
+}
+
+.event-card {
+  background:white;
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow:var(--soft-shadow);
+  transition:.3s;
+}
+
+.event-card:hover { transform:translateY(-4px); }
+
+.event-image {
+  height:180px;
+  background-size:cover;
+  background-position:center;
+}
+
+.event-content { padding:16px; }
+
+.event-category {
+  background:var(--kl-blue);
+  padding:4px 10px;
+  border-radius:6px;
+  color:white;
+  font-size:12px;
+  display:inline-block;
+  margin-bottom:8px;
+}
+
+.event-details {
+  font-size:13px;
+  opacity:0.8;
+  margin:10px 0;
+}
+
+/* ====================================================
+   WINNERS TYPE-B CARDS
+==================================================== */
+.winners-section {
+  background:#f8f9fb;
+  padding:50px 0;
+  margin-top:40px;
+}
+
+.winner-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(260px, 1fr));
+  gap:26px;
+}
+
+.winner-card {
+  background:white;
+  padding:22px;
+  border-radius:12px;
+  text-align:center;
+  box-shadow:var(--soft-shadow);
+  transition:.3s;
+}
+
+.winner-card:hover { transform:translateY(-5px); }
+
+.winner-icon {
+  font-size:48px;
+  margin-bottom:12px;
+}
+
+.gold { color:gold; }
+.silver { color:silver; }
+.bronze { color:#cd7f32; }
+
+/* ====================================================
+   ABOUT / CONTACT
+==================================================== */
+.about-section,
+.contact-section {
+  padding:60px 0;
+  text-align:center;
+}
+
+.contact-box {
+  max-width:450px;
+  margin:auto;
+  background:var(--kl-grey);
+  padding:25px;
+  border-radius:12px;
+  box-shadow:var(--soft-shadow);
+}
+
+/* ====================================================
+   DASHBOARD
+==================================================== */
+#dashboardContainer {
+  padding-top:110px;
+}
+
+.dashboard-wrapper { padding-bottom:40px; }
+
+.dashboard-header {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:26px;
+}
+
+.dashboard-cards {
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(220px, 1fr));
+  gap:20px;
+}
+
+.dashboard-card {
+  background:white;
+  padding:18px;
+  border-radius:12px;
+  text-align:center;
+  box-shadow:var(--soft-shadow);
+}
+
+.card-icon { font-size:28px; color:var(--kl-blue); margin-bottom:6px; }
+.card-value { font-size:26px; font-weight:700; }
+
+/* TABLE */
+.table-container {
+  margin-top:30px;
+  background:white;
+  padding:16px;
+  border-radius:12px;
+  box-shadow:var(--soft-shadow);
+}
+
+table {
+  width:100%;
+  border-collapse:collapse;
+}
+
+th, td {
+  padding:12px;
+  border-bottom:1px solid #eee;
+}
+
+.btn-outline {
+  background:white;
+  border:1px solid var(--kl-blue);
+  padding:6px 14px;
+  border-radius:6px;
+}
+
+.btn-danger {
+  background:#d9534f;
+  padding:6px 14px;
+  border-radius:6px;
+  color:white;
+}
+  /* Two column layout for forms */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.fullwidth {
+  width: 100%;
+}
+
+/* Button styles */
+.btn-success {
+  background: #28a745;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-success:hover {
+  background: #218838;
+}
+
+.btn-sm {
+  padding: 4px 10px;
+  font-size: 13px;
+}
+/* ====================================================
+   MODALS
+==================================================== */
+.modal {
+  display:none;
+  position:fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  background:rgba(0,0,0,.55);
+  backdrop-filter:blur(6px);
+  justify-content:center;
+  align-items:center;
+  z-index:3000;
+}
+
+.modal-content {
+  background:white;
+  width:400px;
+  padding:20px;
+  border-radius:14px;
+  animation:pop .35s ease;
+  box-shadow:var(--soft-shadow);
+}
+
+.modal-large { width:600px; }
+
+@keyframes pop {
+  from { transform:scale(.7); opacity:0; }
+  to { transform:scale(1); opacity:1; }
+}
+
+/* ROLE TABS */
+.role-tabs {
+  display:flex;
+  gap:12px;
+  margin-bottom:16px;
+}
+
+.role-tab {
+  flex:1;
+  padding:8px;
+  background:#e6e6e6;
+  border-radius:6px;
+  cursor:pointer;
+  text-align:center;
+}
+
+.role-tab.active {
+  background:var(--kl-blue);
+  color:white;
+}
+
+/* FORM */
+input, textarea, select {
+  width:100%;
+  padding:10px;
+  border:1px solid #ddd;
+  border-radius:6px;
+  margin-top:6px;
+  margin-bottom:14px;
+}
+
+textarea { height:120px; }
+
+/* IMAGE PREVIEW */
+#eventImagePreview {
+  width:100%;
+  border-radius:12px;
+  margin-bottom:10px;
+  border:3px solid rgba(0,0,0,0.15);
+}
+
+/* MOBILE */
+@media(max-width:768px){
+  nav ul { display:none; }
+}
+/* ====================================================
+   FOOTER
+==================================================== */
+footer {
+  background: rgba(146, 20, 16, 0.85);
+  color: #eee;
+  padding: 50px 0 20px;
+  margin-top: 60px;
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 40px;
+  align-items: start;
+}
+
+.footer-section h3 {
+  font-size: 18px;
+  margin-bottom: 15px;
+  color: var(--kl-yellow);
+}
+
+.footer-section p,
+.footer-section a {
+  font-size: 14px;
+  color: #ccc;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.footer-section a {
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.footer-section a:hover {
+  color: var(--kl-yellow);
+}
+
+/* Social Icons */
+.social-links {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.social-links i {
+  font-size: 18px;
+  color: #fff;
+  background: #333;
+  padding: 10px;
+  border-radius: 50%;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.social-links i:hover {
+  background: var(--kl-yellow);
+  color: #111;
+}
+
+/* Copyright */
+.copyright {
+  text-align: center;
+  border-top: 1px solid #333;
+  margin-top: 30px;
+  padding-top: 15px;
+  font-size: 13px;
+  color: #aaa;
+}
+
+/* Create event */
+
+/* ====================================================
+   CREATE EVENT MODAL (ADMIN)
+==================================================== */
+
+#createEventModal .modal-content {
+  width: 650px;
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 28px;
+  border-radius: 16px;
+  box-shadow: var(--soft-shadow);
+  background: #ffffff;
+  animation: pop .35s ease;
+}
+
+/* Title */
+#createEventModal h3 {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--kl-blue);
+  margin-bottom: 18px;
+  text-align: center;
+}
+
+/* Labels */
+#createEventModal label {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 4px;
+  display: block;
+  font-size: 14px;
+}
+
+/* Form inputs inherited from your global input style */
+#createEventModal input,
+#createEventModal select,
+#createEventModal textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  margin-bottom: 14px;
+  background: #fafafa;
+  transition: 0.3s border;
+}
+
+#createEventModal input:focus,
+#createEventModal select:focus,
+#createEventModal textarea:focus {
+  border-color: var(--kl-blue);
+  outline: none;
+}
+
+/* Image Upload Preview */
+#eventImagePreview {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  margin-top: 10px;
+  margin-bottom: 16px;
+  border: 3px solid rgba(0,0,0,0.15);
+  object-fit: cover;
+  box-shadow: var(--soft-shadow);
+}
+
+/* Submit button */
+#createEventModal button[type="submit"] {
+  background: var(--kl-blue);
+  color: white;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#createEventModal button[type="submit"]:hover {
+  background: var(--kl-blue-light);
+}
+
+/* Close button (X) */
+#createEventModal .close-modal {
+  font-size: 26px;
+  font-weight: bold;
+  cursor: pointer;
+  float: right;
+  color: #555;
+  transition: 0.3s;
+}
+
+#createEventModal .close-modal:hover {
+  color: var(--kl-blue);
+}
+
+/* Two-column layout (optional for future enhancements) */
+.create-event-two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+/* Scrollbar styling for overflowing modal */
+#createEventModal .modal-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+#createEventModal .modal-content::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.25);
+  border-radius: 6px;
+}
+
+#createEventModal .modal-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(0,0,0,0.35);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  #createEventModal .modal-content {
+    width: 90%;
+    padding: 20px;
+  }
+
+  .create-event-two-col {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================================
+   CREATE JUDGE MODAL – FINAL POLISHED CSS
+   Paste this entire block at the bottom of styles.css
+============================================================ */
+
+/* Modal Content */
+#createJudgeModal .modal-content {
+  background: #fff !important;
+  color: #222 !important;
+  padding: 28px;
+  border-radius: 18px;
+  width: 520px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+  animation: pop 0.35s ease;
+}
+
+/* Modal Heading */
+#createJudgeModal h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 18px;
+}
+
+/* Close Icon Fix */
+#createJudgeModal .close-modal {
+  font-size: 24px;
+  font-weight: 700;
+  color: #999;
+  cursor: pointer;
+  transition: 0.2s;
+}
+#createJudgeModal .close-modal:hover {
+  color: #333;
+}
+
+/* Labels */
+#createJudgeModal label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #444;
+  margin-bottom: 6px;
+  display: block;
+}
+
+/* Input fields */
+#createJudgeModal input[type="text"],
+#createJudgeModal input[type="email"],
+#createJudgeModal input[type="password"] {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  width: 100%;
+  margin-bottom: 16px;
+  font-size: 14px;
+  background: #fafafa;
+  transition: 0.2s;
+}
+
+#createJudgeModal input:focus {
+  border-color: var(--kl-blue);
+  background: #fff;
+  outline: none;
+}
+
+/* EVENT CHECKLIST WRAPPER */
+.event-check-list {
+  max-height: 250px;
+  overflow-y: auto;
+  padding-right: 6px;
+  margin-top: 12px;
+  border-radius: 10px;
+}
+
+/* EVENT CARD (Checkbox Container) */
+.event-check-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  transition: 0.25s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.07);
+}
+
+.event-check-item:hover {
+  background: #f9f9f9;
+  border-color: var(--kl-blue);
+  transform: translateY(-2px);
+}
+
+/* Checkbox */
+.event-check-item input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--kl-blue);
+}
+
+/* Event Label */
+.event-check-item label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #222;
+  cursor: pointer;
+  line-height: 1.4;
+  flex: 1;
+}
+
+/* SCROLLBAR STYLING */
+.event-check-list::-webkit-scrollbar {
+  width: 7px;
+}
+.event-check-list::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+}
+.event-check-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.35);
+}
+
+/* CREATE JUDGE BUTTON */
+#createJudgeModal .btn-primary {
+  background: var(--kl-yellow);
+  color: #222;
+  font-weight: 600;
+  padding: 10px 22px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+#createJudgeModal .btn-primary:hover {
+  background: #ffb800;
+}
+
+/* MOBILE RESPONSIVE */
+@media (max-width: 600px) {
+  #createJudgeModal .modal-content {
+    width: 90%;
+    padding: 20px;
+  }
+
+  .event-check-item {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+/* Animation */
+@keyframes pop {
+  from { transform: scale(0.85); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}

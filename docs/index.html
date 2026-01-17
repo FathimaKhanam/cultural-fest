@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>KL University - Cultural Fest 2025</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js"></script>
+
+</head>
+
+<body id="page-index">
+
+  <!-- HEADER -->
+  <header>
+    <div class="container header-content">
+
+      <!-- Logo -->
+      <div class="logo-container">
+        <img src="./public/images/logo.png" alt="KL University Logo" class="logo">
+        <div class="title-wrap">
+          <div class="uni-title">KL University</div>
+          <div class="fest-subtitle">Cultural Fest 2025</div>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <nav>
+        <ul>
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#events">Events</a></li>
+          <li><a href="#coming-soon">Coming Soon</a></li>
+          <li><a href="#winners">Winners</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      <!-- Auth Buttons -->
+      <div class="user-actions" id="navAuthButtons">
+        <button class="btn login-outline" id="openLogin">Login</button>
+      </div>
+
+      <!-- Profile Menu -->
+      <div class="profile-menu" id="profileMenu">
+        <img src="./public/images/user.png" id="profileIcon" class="profile-icon" alt="User">
+        <div class="profile-dropdown" id="profileDropdown">
+          <p id="profileName">User</p>
+          <p id="profileEmail"></p>
+          <button id="logoutBtn">Logout</button>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="hero" id="hero" style="background-image:url('./public/images/me2.jpg')">
+    <div class="hero-overlay"></div>
+    <div class="container hero-inner">
+      <h1>KL University Cultural Fest 2025</h1>
+      <p>Experience the vibrant celebration of art, culture, and talent. Join us for an unforgettable journey through music, dance, drama, and more.</p>
+      <a class="btn btn-primary" href="#events">Explore Events</a>
+    </div>
+  </section>
+
+  <!-- COMING SOON SLIDER -->
+  <section class="coming-soon-section" id="coming-soon">
+    <div class="coming-soon-slider">
+
+      <div class="slide active" style="background-image:url('./public/images/de2.jpg')">
+        <div class="slide-content">
+          <img src="./public/images/de1.jpeg" class="event-logo">
+          <h2>Inter-University Dance Competition</h2>
+          <p>Showcase your dancing excellence with performers from across the nation!</p>
+          <p><strong>Date:</strong> December 15, 2025</p>
+          <button class="btn btn-primary notify-btn" data-event-id="1">Notify Me</button>
+        </div>
+      </div>
+
+      <div class="slide" style="background-image:url('./public/images/me2.jpg')">
+        <div class="slide-content">
+          <img src="./public/images/me1.jpeg" class="event-logo">
+          <h2>Battle of Bands</h2>
+          <p>Compete with the best as your band performs on the grandest stage!</p>
+          <p><strong>Date:</strong> December 18, 2025</p>
+          <button class="btn btn-primary notify-btn" data-event-id="2">Notify Me</button>
+        </div>
+      </div>
+
+      <div class="slide" style="background-image:url('./public/images/dre2.jpeg')">
+        <div class="slide-content">
+          <img src="./public/images/dre1.jpeg" class="event-logo">
+          <h2>Street Play Festival</h2>
+          <p>Perform powerful stories through impactful street plays.</p>
+          <p><strong>Date:</strong> December 20, 2025</p>
+          <button class="btn btn-primary notify-btn" data-event-id="3">Notify Me</button>
+        </div>
+      </div>
+
+      <div class="slide-indicators">
+        <div class="indicator active" data-slide="0"></div>
+        <div class="indicator" data-slide="1"></div>
+        <div class="indicator" data-slide="2"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FEATURED EVENTS -->
+  <section class="events-section" id="events">
+    <div class="container">
+      <h2 class="section-title">Featured Events</h2>
+      <div class="events-grid" id="eventsGrid"></div>
+    </div>
+  </section>
+
+  <!-- WINNERS SECTION -->
+  <section id="winners" class="winners-section">
+    <div class="container">
+      <h2 class="section-title">Winners Gallery 2025</h2>
+
+      <div class="winner-grid">
+
+        <div class="winner-card">
+          <i class="fas fa-trophy trophy-gold"></i>
+          <h4>1st Place</h4>
+          <h3>Classical Dance</h3>
+          <p><strong>Priya Sharma</strong></p>
+          <span>ID: 2100030123</span>
+        </div>
+
+        <div class="winner-card">
+          <i class="fas fa-trophy trophy-silver"></i>
+          <h4>2nd Place</h4>
+          <h3>Battle of Bands</h3>
+          <p><strong>Thunderbolts</strong></p>
+          <span>ID: Group of 5</span>
+        </div>
+
+        <div class="winner-card">
+          <i class="fas fa-trophy trophy-bronze"></i>
+          <h4>3rd Place</h4>
+          <h3>Street Play</h3>
+          <p><strong>Abhivyakti Team</strong></p>
+          <span>ID: Team of 10</span>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTACT SECTION -->
+  <section id="contact" class="contact-section">
+    <div class="container">
+      <h2 class="section-title">Contact Us</h2>
+
+      <div class="contact-box">
+        <p><strong>Email:</strong> culturalfest@kluniversity.in</p>
+        <p><strong>Phone:</strong> +91 863 234 4700</p>
+        <p><strong>Venue:</strong> KL University, Green Fields, Vaddeswaram</p>
+        <br>
+        <p><strong>For more information contact Admin.</strong></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DASHBOARD CONTAINER (dynamic content loads here) -->
+  <div id="dashboardContainer"></div>
+
+  <!-- LOGIN MODAL -->
+  <div id="loginModal" class="modal">
+    <div class="modal-content login-box">
+      <div class="login-header">
+        <h3>Login to Your Account</h3>
+        <span class="close-modal" onclick="closeModal('loginModal')">×</span>
+      </div>
+
+      <div class="role-tabs">
+        <button class="role-tab active" data-role="STUDENT">Student</button>
+        <button class="role-tab" data-role="ADMIN">Admin</button>
+        <button class="role-tab" data-role="JUDGE">Judge</button>
+      </div>
+
+      
+      <form id="loginForm">
+        <label>Email</label>
+        <input type="email" id="loginEmail" required>
+
+        <label>Password</label>
+        <input type="password" id="loginPassword" required>
+
+        <button type="submit" class="btn btn-primary fullwidth">Login</button>
+
+        <p class="register-text">
+          Students only — <a href="javascript:void(0)" onclick="openRegister()">Register here</a>
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <!-- REGISTER MODAL (STUDENT ONLY) -->
+  <div id="registerModal" class="modal">
+    <div class="modal-content modal-large">
+      <span class="close-modal" onclick="closeModal('registerModal')">×</span>
+      <h3>Create Student Account</h3>
+
+      <form id="registerForm">
+
+        <div class="two-col">
+          <div><label>Name</label><input type="text" name="name" required></div>
+          <div><label>Email</label><input type="email" name="email" required></div>
+        </div>
+
+        <div class="two-col">
+          <div><label>Password</label><input type="password" name="password" required></div>
+          <div><label>Confirm</label><input type="password" name="confirm" required></div>
+        </div>
+
+        <div class="two-col">
+          <div><label>Mobile</label><input type="tel" name="mobile" pattern="[0-9]{10}" required></div>
+          <div><label>College ID</label><input type="text" name="college" required></div>
+        </div>
+
+        <input type="hidden" name="role" value="STUDENT">
+
+        <button type="submit" class="btn btn-primary fullwidth">Register</button>
+      </form>
+
+      <p style="text-align:center;margin-top:10px;">
+        Already registered? <a href="#" onclick="openLogin()">Login here</a>
+      </p>
+    </div>
+  </div>
+  <!-- CREATE EVENT MODAL -->
+  <div id="createEventModal" class="modal">
+    <div class="modal-content modal-large">
+      <span class="close-modal" onclick="closeModal('createEventModal')">×</span>
+      <h3>Create New Event</h3>
+      
+      <form id="createEventForm">
+        <label>Event Name</label>
+        <input type="text" id="eventName" required>
+      
+        <label>Description</label>
+        <textarea id="eventDesc" required></textarea>
+      
+        <label>Category</label>
+        <select id="eventCategory" required>
+          <option value="">Select Category</option>
+          <option value="Dance">Dance</option>
+          <option value="Music">Music</option>
+          <option value="Drama">Drama</option>
+          <option value="Literary">Literary</option>
+          <option value="Comedy">Comedy</option>
+          <option value="Arts">Arts</option>
+        </select>
+      
+        <label>Type</label>
+        <select id="eventType" required>
+          <option value="SOLO">Solo</option>
+          <option value="GROUP">Group</option>
+          <option value="TEAM">Team</option>
+        </select>
+      
+        <div class="two-col">
+          <div>
+            <label>Max Participants</label>
+            <input type="number" id="maxParticipants" value="1" min="1" required>
+          </div>
+          <div>
+            <label>Max Registrations</label>
+            <input type="number" id="maxRegistrations" value="50" min="1" required>
+          </div>
+        </div>
+      
+      <label>Registration Fee</label>
+      <input type="number" id="registrationFee" value="0" min="0" step="0.01">
+      
+      <div class="two-col">
+        <div>
+          <label>Event Date</label>
+          <input type="date" id="eventDate" required>
+        </div>
+        <div>
+          <label>Event Time</label>
+          <input type="time" id="eventTime" required>
+        </div>
+      </div>
+      
+      <label>Venue</label>
+      <input type="text" id="eventVenue" required>
+      
+      <label>Image URL</label>
+      <input type="text" id="eventImage" placeholder="./public/images/event.jpg">
+      
+      <div style="text-align:right;margin-top:15px">
+        <button type="button" class="btn btn-outline" onclick="closeModal('createEventModal')">Cancel</button>
+        <button type="submit" class="btn btn-primary">Create Event</button>
+      </div>
+    </form>
+  </div>
+</div>
+  <!-- Notify, Event Details, Edit Event, Judge Modals remain same -->
+  <!-- (No changes needed, JS will control them) -->
+
+  <!-- ABOUT -->
+  <section id="about" class="about-section">
+    <div class="container">
+      <h2 class="section-title">About Cultural Fest 2025</h2>
+      <p>KL University's annual cultural celebration of music, dance, drama, arts & innovation.</p>
+    </div>
+  </section>
+
+  <!-- CREATE EVENT MODAL (ADMIN) -->
+<div id="createEventModal" class="modal">
+  <div class="modal-content modal-large">
+    <span class="close-modal" onclick="closeModal('createEventModal')">&times;</span>
+    <h3>Create New Event</h3>
+
+    <form id="createEventForm">
+
+      <label>Event Name *</label>
+      <input type="text" id="eventName" required>
+
+      <label>Description</label>
+      <textarea id="eventDesc"></textarea>
+
+      <label>Category *</label>
+      <select id="eventCategory" required>
+        <option value="">Select</option>
+        <option>DANCE</option>
+        <option>MUSIC</option>
+        <option>DRAMA</option>
+        <option>LITERARY</option>
+        <option>FINE ARTS</option>
+        <option>ENTERTAINMENT</option>
+        <option>FUN</option>
+        <option>FASHION</option>
+      </select>
+
+      <label>Type *</label>
+      <select id="eventType">
+        <option value="SOLO">SOLO</option>
+        <option value="GROUP">GROUP</option>
+        <option value="TEAM">TEAM</option>
+      </select>
+
+      <label>Max Participants *</label>
+      <input type="number" id="maxParticipants" min="1" required>
+
+      <label>Max Registrations *</label>
+      <input type="number" id="maxRegistrations" min="1" required>
+
+      <label>Registration Fee</label>
+      <input type="number" id="eventFee">
+
+      <label>Date *</label>
+      <input type="date" id="eventDate" required>
+
+      <label>Start Time *</label>
+      <input type="time" id="eventTime" required>
+
+      <label>Venue *</label>
+      <input type="text" id="eventVenue" required>
+
+      <label>Event Image</label>
+      <input type="file" id="eventImageUpload" accept="image/*">
+      <img id="eventImagePreview" src="./public/images/default.jpg"
+           style="width: 120px; margin-top:10px; border-radius:8px;" />
+
+      <div style="text-align:right;margin-top:15px">
+        <button type="submit" class="btn btn-primary">Create Event</button>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<!-- CREATE JUDGE MODAL (UPDATED) -->
+<div id="createJudgeModal" class="modal">
+  <div class="modal-content modal-large">
+    <span class="close-modal" onclick="closeModal('createJudgeModal')">&times;</span>
+
+    <h3>Create Judge & Assign Events</h3>
+
+    <form id="createJudgeForm">
+
+      <label>Judge Name *</label>
+      <input id="judgeName" type="text" required />
+
+      <label>Email *</label>
+      <input id="judgeEmail" type="email" required />
+
+      <label>Password *</label>
+      <input id="judgePassword" type="password" required />
+
+      <label>Select Events for This Judge</label>
+      <div id="judgeEventList" class="event-check-list"></div>
+
+      <div style="text-align:right;margin-top:20px;">
+        <button type="submit" class="btn btn-primary">Create Judge</button>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container footer-content">
+      <div class="footer-section">
+        <h3>KL University</h3>
+        <p>Green Fields, Vaddeswaram, Andhra Pradesh.</p>
+      </div>
+
+      <div class="footer-section">
+        <h3>Event Categories</h3>
+        <a>Dance</a><a>Music</a><a>Drama</a><a>Literary</a>
+      </div>
+
+      <div class="footer-section">
+  <h3>Connect With Us</h3>
+  <div class="social-links">
+    <a href="https://www.facebook.com/p/Koneru-lakshmaiah-college-of-engineering-100066168481685/" target="_blank" aria-label="Facebook">
+      <i class="fab fa-facebook"></i>
+    </a>
+
+    <a href="https://www.instagram.com/kluniversityofficial/?hl=en" target="_blank" aria-label="Instagram">
+      <i class="fab fa-instagram"></i>
+    </a>
+
+    <a href="https://www.youtube.com/@kluniversityofficial" target="_blank" aria-label="YouTube">
+      <i class="fab fa-youtube"></i>
+    </a>
+  </div>
+</div>
+
+    </div>
+
+    <div class="copyright">
+      © 2025 KL University Cultural Fest — All Rights Reserved.
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
