@@ -1,62 +1,66 @@
 package com.culturalfest.service;
 
 import com.culturalfest.model.Judge;
-import com.culturalfest.model.Event;
-import com.culturalfest.model.User;
 import com.culturalfest.repository.JudgeRepository;
-import com.culturalfest.repository.EventRepository;
-import com.culturalfest.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 @Service
-@SuppressWarnings("null")  // ← ADD THIS
+@Transactional
 public class JudgeService {
-    
+
     @Autowired
     private JudgeRepository judgeRepository;
-    
-    @Autowired
-    private UserRepository userRepository;
-    
-    @Autowired
-    private EventRepository eventRepository;
-    
-    public Judge assignJudgeToEvent(Long userId, Long eventId, String specialization) {
-        User user = userRepository.findById(userId)
-            .orElseThrow(() -> new RuntimeException("User not found"));
-        
-        if (!user.getRole().equals(User.Role.JUDGE)) {
-            throw new RuntimeException("User is not a judge");
-        }
-        
-        Event event = eventRepository.findById(eventId)
-            .orElseThrow(() -> new RuntimeException("Event not found"));
-        
-        if (judgeRepository.existsByUserAndEvent(user, event)) {
-            throw new RuntimeException("Judge already assigned to this event");
-        }
-        
-        Judge judge = new Judge();
-        judge.setUser(user);
-        judge.setEvent(event);
-        judge.setSpecialization(specialization);
-        
-        return judgeRepository.save(judge);
-    }
-    
-    public List<Judge> getJudgesForEvent(Long eventId) {
-        Event event = eventRepository.findById(eventId)
-            .orElseThrow(() -> new RuntimeException("Event not found"));
-        return judgeRepository.findByEvent(event);
-    }
-    
+
+    // Get all judges
     public List<Judge> getAllJudges() {
         return judgeRepository.findAll();
     }
-    
-    public void removeJudge(Long judgeId) {
-        judgeRepository.deleteById(judgeId);
+
+    // Get judge by ID
+    public Judge getJudgeById(Long id) {
+        return judgeRepository.findById(id).orElse(null);
+    }
+
+    // Create new judge assignment
+    public Judge createJudge(Judge judge) {
+        return judgeRepository.save(judge);
+    }
+
+    // Update judge assignment
+    public Judge updateJudge(Long id, Judge judge) {
+        if (judgeRepository.existsById(id)) {
+            judge.setId(id);
+            return judgeRepository.save(judge);
+        }
+        return null;
+    }
+
+    // Delete judge assignment
+    public void deleteJudge(Long id) {
+        judgeRepository.deleteById(id);
+    }
+
+    // Get all judges assigned to a specific event
+    public List<Judge> getJudgesByEventId(Long eventId) {
+        return judgeRepository.findByEventId(eventId);
+    }
+
+    // Get all events assigned to a specific judge
+    public List<Judge> getJudgesByUserId(Long userId) {
+        return judgeRepository.findByUserId(userId);
+    }
+
+    // Check if a judge is already assigned to an event
+    public boolean isJudgeAssignedToEvent(Long userId, Long eventId) {
+        return judgeRepository.existsByUserIdAndEventId(userId, eventId);
+    }
+
+    // Get specific assignment
+    public Judge getAssignment(Long userId, Long eventId) {
+        return judgeRepository.findByUserIdAndEventId(userId, eventId);
     }
 }

@@ -4,6 +4,9 @@ import com.culturalfest.model.Announcement;
 import com.culturalfest.model.Event;
 import com.culturalfest.repository.AnnouncementRepository;
 import com.culturalfest.repository.EventRepository;
+
+import jakarta.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -19,6 +22,7 @@ public class AnnouncementService {
     @Autowired
     private EventRepository eventRepository;
     
+    @Transactional
     public Announcement createAnnouncement(Announcement announcement) {
         return announcementRepository.save(announcement);
     }

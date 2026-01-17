@@ -2,6 +2,9 @@ package com.culturalfest.service;
 
 import com.culturalfest.model.User;
 import com.culturalfest.repository.UserRepository;
+
+import jakarta.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -14,13 +17,13 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public User registerUser(User user) {
-        if (userRepository.existsByEmail(user.getEmail())) {
-            throw new RuntimeException("Email already registered");
-        }
-
-        return userRepository.save(user);
+@Transactional
+public User registerUser(User user) {
+    if (userRepository.existsByEmail(user.getEmail())) {
+        throw new RuntimeException("Email already registered");
     }
+    return userRepository.save(user);   // ← this will NOW actually save
+}
     
     public Optional<User> login(String email, String password) {
         Optional<User> user = userRepository.findByEmail(email);

@@ -3,6 +3,9 @@ package com.culturalfest.service;
 import com.culturalfest.model.Event;
 
 import com.culturalfest.repository.EventRepository;
+
+import jakarta.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +19,7 @@ public class EventService {
     @Autowired
     private EventRepository eventRepository;
     
+    @Transactional
     public Event createEvent(Event event) {
         return eventRepository.save(event);
     }

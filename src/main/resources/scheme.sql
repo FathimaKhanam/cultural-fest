@@ -1,5 +1,3 @@
--- Create Database (run this first in PostgreSQL)
--- CREATE DATABASE culturaltest_db;
 
 -- Users Table
 CREATE TABLE IF NOT EXISTS users (
@@ -90,11 +88,6 @@ CREATE TABLE IF NOT EXISTS announcements (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Insert default admin user
-INSERT INTO users (name, email, password, role) VALUES 
-('Admin Master', 'admin@klu.com', 'Admin@1234', 'ADMIN')
-ON CONFLICT (email) DO NOTHING;
-
 -- Insert default judges
 INSERT INTO users (name, email, password, role) VALUES 
 ('Judge One', 'judge1@klu.com', 'Judge@1234', 'JUDGE'),
@@ -133,3 +126,9 @@ CREATE INDEX IF NOT EXISTS idx_registrations_user ON registrations(user_id);
 CREATE INDEX IF NOT EXISTS idx_registrations_event ON registrations(event_id);
 CREATE INDEX IF NOT EXISTS idx_winners_event ON winners(event_id);
 CREATE INDEX IF NOT EXISTS idx_announcements_active ON announcements(is_active);
+
+---# Backup entire database to a dated file (super safe)
+---pg_dump -U postgres -h localhost culturalfest > "culturalfest_backup_$(date +%Y-%m-%d_%H%M).sql"
+
+---# Optional: also export as custom format (smaller + faster restore)
+---pg_dump -U postgres -Fc culturalfest > "culturalfest_backup_$(date +%Y-%m-%d).dump"
